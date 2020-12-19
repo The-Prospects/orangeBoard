@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>White Board</title>
+    <title>Orange Board</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A Collabrative White board" />
-    <meta name="author" content="devan" />
+    <meta name="author" content="The Prospects" />
     <style type="text/css">
       #container {
         position: relative;
@@ -18,7 +18,7 @@
         border-radius: 5px;
       }
       body {
-        background: rgb(0, 0, 0) !important;
+        background: rgb(40, 39, 39) !important;
       }
       #imageView {
         border: 1px solid #000;
@@ -68,21 +68,7 @@
 
   <body style="margin-top: 30px">
     <div class="container">
-      <div
-        class="alert alert-info"
-        style="padding: 10px !important; margin-bottom: 5px; width: 88%"
-      >
-        <strong>Socket IO &#10084;</strong> - This is a Multi-Users Drawing
-        board, Open
-        <a
-          class="linkToBoard"
-          style="cursor: pointer; color: #ff002d"
-          target="_blank"
-          >link</a
-        >
-        in another tab or Open in another computer try drawing simultaneously in
-        both. <strong>Cool, isn't ?</strong>
-      </div>
+      <!-- Insert Header Here -->
       <p style="">
         <button
           type="button"
@@ -135,7 +121,15 @@
         <button type="button" class="btn btn-warning btn-sm" id="clear-all">
           Clear All
         </button>
-        <label for="colour" style="position: absolute">Colour : </label>
+        <a
+          href=""
+          download="canvasImage.jpg"
+          onclick="downloadImage(this);"
+          class="btn btn-warning btn-sm"
+          id="btn-download"
+          >Download
+        </a>
+        <label for="colour" style="position: absolute">Color : </label>
         <input
           id="colour-picker"
           value="#000000"
@@ -225,6 +219,16 @@
         var board_url = window.location.href;
         $('.linkToBoard').attr('href', board_url);
       });
+    </script>
+
+    <!-- Script to download canvas image as .png with Download btn -->
+    <script>
+      var canvas = document.getElementById('imageView');
+      var context = canvas.getContext('2d');
+      function downloadImage(el) {
+        var imageURL = canvas.toDataURL('image/jpg');
+        el.href = imageURL;
+      }
     </script>
   </body>
 </html>
