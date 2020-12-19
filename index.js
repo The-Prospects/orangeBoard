@@ -6,8 +6,8 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/public'));
 
-//heroku features:enable http-session-affinity
-//to work with socket io
+//Heroku will run this to work with socket io
+heroku features:enable http-session-affinity
 
 function onConnection(socket) {
   socket.on('drawing', function (data) {
