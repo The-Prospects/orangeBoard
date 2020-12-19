@@ -1,0 +1,19 @@
+Index: index.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const express = require('express');\r\nconst app = express();\r\nconst http = require('http').Server(app);\r\nconst io = require('socket.io')(http);\r\nconst port = process.env.PORT || 3000;\r\n\r\napp.use(express.static(__dirname + '/public'));\r\n\r\n//Heroku will run this to work with socket io\r\nheroku features:enable http-session-affinity\r\n\r\nfunction onConnection(socket) {\r\n  socket.on('drawing', function (data) {\r\n    socket.broadcast.emit('drawing', data);\r\n    console.log(data);\r\n  });\r\n\r\n  socket.on('rectangle', function (data) {\r\n    socket.broadcast.emit('rectangle', data);\r\n    console.log(data);\r\n  });\r\n\r\n  socket.on('linedraw', function (data) {\r\n    socket.broadcast.emit('linedraw', data);\r\n    console.log(data);\r\n  });\r\n\r\n  socket.on('circledraw', function (data) {\r\n    socket.broadcast.emit('circledraw', data);\r\n    console.log(data);\r\n  });\r\n\r\n  socket.on('ellipsedraw', function (data) {\r\n    socket.broadcast.emit('ellipsedraw', data);\r\n    console.log(data);\r\n  });\r\n\r\n  socket.on('textdraw', function (data) {\r\n    socket.broadcast.emit('textdraw', data);\r\n    console.log(data);\r\n  });\r\n\r\n  socket.on('copyCanvas', function (data) {\r\n    socket.broadcast.emit('copyCanvas', data);\r\n    console.log(data);\r\n  });\r\n\r\n  socket.on('Clearboard', function (data) {\r\n    socket.broadcast.emit('Clearboard', data);\r\n    console.log(data);\r\n  });\r\n}\r\n\r\nio.on('connection', onConnection);\r\n\r\nhttp.listen(port, () => console.log('listening on port ' + port));\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/index.js b/index.js
+--- a/index.js	
++++ b/index.js	
+@@ -7,7 +7,7 @@
+ app.use(express.static(__dirname + '/public'));
+ 
+ //Heroku will run this to work with socket io
+-heroku features:enable http-session-affinity
++
+ 
+ function onConnection(socket) {
+   socket.on('drawing', function (data) {
