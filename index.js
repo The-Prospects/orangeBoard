@@ -6,9 +6,6 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/public'));
 
-//Heroku will run this to work with socket io
-heroku features:enable http-session-affinity
-
 function onConnection(socket) {
   socket.on('drawing', function (data) {
     socket.broadcast.emit('drawing', data);
