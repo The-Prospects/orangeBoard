@@ -3,7 +3,6 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
-
 require('dotenv').config();
 const { App } = require('@slack/bolt');
 
@@ -14,8 +13,7 @@ const bot = new App({
 
 (async () => {
   // Start the app
-  await bot.start(process.env.PORT || 4000);
-
+  await bot.start(process.env.PORT_SLACK || 4000);
   console.log('⚡️ Bolt app is running!');
 })();
 
@@ -36,6 +34,8 @@ bot.event("app_mention", async ({ context, event }) => {
   }
 
 });
+
+
 
 app.use(express.static(__dirname + '/public'));
 
