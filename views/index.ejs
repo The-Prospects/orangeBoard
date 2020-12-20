@@ -15,8 +15,8 @@
         position: relative;
       }
       #container {
-        width: 1100px;
-        height: 500 px;
+        width: 1110px;
+        height: 555 px;
         background-color: #fff;
         border-radius: 5px;
       }
@@ -25,7 +25,17 @@
       }
 
       .logo {
-        height: 20px;
+        height: 35px;
+        position: absolute;
+        top: 8px;
+        left: 5px;
+      }
+
+      .logo2 {
+        height: 50px;
+        position: absolute;
+        top: 0px;
+        right: 2px;
       }
 
       #imageTemp {
@@ -78,7 +88,10 @@
           <a class="navbar-brand" href="/">
             <img class="logo" src="/img/whiteboard.jpg" />
           </a>
-          <p class="navbar-text">Orange Board</p>
+          <p class="navbar-text" style="margin-left: 40px; font-size: 16px;">Orange Board</p>
+          <a class="navbar-brand" href="/">
+            <img class="logo2" src="/img/beaverlogo.png" />
+          </a>
         </div>
       </div>
     </nav>
@@ -203,7 +216,7 @@
       </p>
 
       <div id="container">
-        <canvas id="imageView" width="1100" height="500">
+        <canvas id="imageView" width="1110" height="555">
           <p>
             Unfortunately, your browser is currently unsupported by our web
             application. We are sorry for the inconvenience. Please use one of
