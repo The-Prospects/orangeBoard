@@ -1,45 +1,28 @@
 const express = require('express');
 const app = express();
+const path = require('path');
+const ejs = require('ejs');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
 
-require('dotenv').config();
-const { App } = require('@slack/bolt');
+app.use(express.static('public'));
+app.set('view engine', 'html');
+app.engine('html', ejs.renderFile);
 
-const bot = new App({
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
-  token: process.env.SLACK_BOT_TOKEN,
+app.get('/', function (req, res) {
+  res.render('index');
 });
 
-(async () => {
-  // Start the app
-  await bot.start(process.env.PORT || 4000);
-
-  console.log('⚡️ Bolt app is running!');
-})();
-
-http.listen(port, () => console.log('listening on port ' + port));
-
-// Gives the response
-bot.event("app_mention", async ({ context, event }) => {
-
-  try{
-    await bot.client.chat.postMessage({
-      token: context.botToken,
-      channel: event.channel,
-      text: `Hello <@${event.user}> you mentioned me. Here is the link for your Orange Board:`
-    });
-  }
-  catch (e) {
-    console.log(`error responding ${e}`);
-  }
-
+app.get('/:boardId', function (req, res) {
+  res.render('index');
 });
-
-app.use(express.static(__dirname + '/public'));
 
 function onConnection(socket) {
+  socket.on('join room', function (roomName) {
+    socket.join(roomName);
+  });
+
   socket.on('drawing', function (data) {
     socket.broadcast.emit('drawing', data);
     console.log(data);
@@ -83,4 +66,4 @@ function onConnection(socket) {
 
 io.on('connection', onConnection);
 
-
+http.listen(port, () => console.log('listening on port ' + port));
