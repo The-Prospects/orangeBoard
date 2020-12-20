@@ -3,6 +3,15 @@ const express = require('express');
 const app = express();
 // page routing
 const authRoutes = require('./routes/auth-routes');
+//const profileRoutes = require('./routes/profile-routes');
+// auth
+const passportSetup = require('./config/passport-setup');
+const passport = require('passport');
+// database
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
+const cookieSession = require('cookie-session');
+
 // networking
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
@@ -11,8 +20,28 @@ const port = process.env.PORT || 3000;
 // set view engine
 app.set('view engine', 'ejs');
 
+app.use(cookieSession({
+  maxAge: 24 * 60 * 60 * 1000,    // 1 day in ms
+  keys: keys.session.cookieKey,
+}))
+
+// initalize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// connect to mongoose database
+mongoose.connect(keys.mongodb.dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+  console.log('database connected');
+  if(err){
+    console.log(err);
+  }
+});
+
 // use auth routes
 app.use('/auth', authRoutes);
+
+// use profile routes
+// app.use('/profile', profileRoutes);
 
 // create home route
 app.get('/', (req, res) => {

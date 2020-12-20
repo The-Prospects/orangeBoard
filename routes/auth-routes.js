@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const passport = require('passport');
+
 
 // auth login
 router.get('/login', (req, res) => {
@@ -11,8 +13,11 @@ router.get('/logout', (req, res) => {
 });
 
 // auth with slack
-router.get('/slack', (req, res) => {
-  res.render('logging in with slack');
+router.get('/slack', passport.authenticate('Slack'));
+
+// callback auth with slack
+router.get('/slack/redirect', passport.authenticate('Slack'), (req, res) => {
+  res.send(req.user)    // print response
 });
 
 module.exports = router;
