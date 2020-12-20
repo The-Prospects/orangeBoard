@@ -2,6 +2,7 @@
 
 (function () {
   var socket = io();
+  socket.emit('join', BOARD_ID);
   // This object holds the implementation of each drawing tool.
   var tools = {};
   var textarea;
