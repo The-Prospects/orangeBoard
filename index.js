@@ -1,12 +1,28 @@
 const express = require('express');
 const app = express();
+const path = require('path');
+const ejs = require('ejs');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'));
+app.set('view engine', 'html');
+app.engine('html', ejs.renderFile);
+
+app.get('/', function (req, res) {
+  res.render('index');
+});
+
+app.get('/:boardId', function (req, res) {
+  res.render('index');
+});
 
 function onConnection(socket) {
+  socket.on('join room', function (roomName) {
+    socket.join(roomName);
+  });
+
   socket.on('drawing', function (data) {
     socket.broadcast.emit('drawing', data);
     console.log(data);
