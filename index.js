@@ -17,9 +17,15 @@ app.get('/', (req, res) => {
 });
 
 // boardId created from req.params or random id from '/' redirect
-app.get('/:board', function (req, res) {
+app.get('/:board', function (req, res, next) {
   res.render('index', { boardId: req.params.board });
+  next();
 });
+
+// bot api information
+app.get('/:board/botapi', function (req, res){
+  res.json({url: 'https://orange-board.herokuapp.com/' + req.params.board})
+})
 
 // Create new board with form value
 app.post('/create', function (req, res) {
