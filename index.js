@@ -2,15 +2,29 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const ejs = require('ejs');
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
+const server = app.listen(port, () => console.log('listening on port ' + port));
+const io = require('socket.io')(server, { wsEngine: 'ws' });
+const { v4: uuidV4 } = require('uuid');
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
+// Random id appends to '/' route and redirects to '/:board' route
+app.get('/', (req, res) => {
+  res.redirect(`/${uuidV4()}`);
+});
+
+// boardId created from req.params or random id from '/' redirect
 app.get('/:board', function (req, res) {
   res.render('index', { boardId: req.params.board });
+});
+
+// Create new board with form value
+app.post('/create', function (req, res) {
+  console.log(req.body.board);
+  res.redirect(`/${req.body.board}`);
 });
 
 io.on('connection', (socket) => {
@@ -57,5 +71,3 @@ io.on('connection', (socket) => {
     });
   });
 });
-
-http.listen(port, () => console.log('listening on port ' + port));

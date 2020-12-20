@@ -22,6 +22,7 @@
       }
       body {
         background: rgb(255, 108, 51) !important;
+        padding-top: 90px;
       }
 
       .logo {
@@ -82,17 +83,30 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/">
+          <a class="navbar-brand" href="#">
             <img class="logo" src="/img/whiteboard.jpg" />
           </a>
-          <p class="navbar-text" style="margin-left: 40px; font-size: 16px;">Orange Board</p>
-          <a class="navbar-brand" href="/">
+          <p class="navbar-text" style="margin-left: 40px; font-size: 16px">
+            Orange Board
+          </p>
+        </div>
+        <form class="navbar-form navbar-left" method="post" action="/create">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Create New Board"
+              name="board"
+            />
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+          <a class="navbar-brand" href="#">
             <img class="logo2" src="/img/beaverlogo.png" />
           </a>
-        </div>
+        </form>
       </div>
     </nav>
     <div class="container">
