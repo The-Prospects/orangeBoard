@@ -3,39 +3,6 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
-require('dotenv').config();
-const { App } = require('@slack/bolt');
-
-const bot = new App({
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
-  token: process.env.SLACK_BOT_TOKEN,
-});
-
-(async () => {
-  // Start the app
-  await bot.start(process.env.PORT || 4000);
-  console.log('⚡️ Bolt app is running!');
-})();
-
-// Gives the response
-bot.event("app_mention", async ({ context, event }) => {
-  try{
-    await bot.client.chat.postMessage({
-      token: context.botToken,
-      channel: event.channel,
-      text: `Hello <@${event.user}> you mentioned me. Here is the link for your Orange Board:`
-    });
-  }
-  catch (e) {
-    console.log(`error responding ${e}`);
-  }
-});
-
-//Slash command
-bot.command("/orangeboard", async ({command, ack, say}) => {
-  await ack();
-  await say('YO THIS IS A SLASH COMMAND');
-})
 
 http.listen(port, () => console.log('listening on port ' + port));
 
