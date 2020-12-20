@@ -1,8 +1,23 @@
+// express setup
 const express = require('express');
 const app = express();
+// page routing
+const authRoutes = require('./routes/auth-routes');
+// networking
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
+
+// set view engine
+app.set('view engine', 'ejs');
+
+// use auth routes
+app.use('/auth', authRoutes);
+
+// create home route
+app.get('/', (req, res) => {
+  res.render('home');
+});
 
 app.use(express.static(__dirname + '/public'));
 
