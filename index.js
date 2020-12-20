@@ -13,15 +13,12 @@ const bot = new App({
 
 (async () => {
   // Start the app
-  await bot.start(process.env.PORT_SLACK || 4000);
+  await bot.start(process.env.PORT || 4000);
   console.log('⚡️ Bolt app is running!');
 })();
 
-http.listen(port, () => console.log('listening on port ' + port));
-
 // Gives the response
 bot.event("app_mention", async ({ context, event }) => {
-
   try{
     await bot.client.chat.postMessage({
       token: context.botToken,
@@ -32,10 +29,15 @@ bot.event("app_mention", async ({ context, event }) => {
   catch (e) {
     console.log(`error responding ${e}`);
   }
-
 });
 
+//Slash command
+bot.command("/orangeboard", async ({command, ack, say}) => {
+  await ack();
+  await say('YO THIS IS A SLASH COMMAND');
+})
 
+http.listen(port, () => console.log('listening on port ' + port));
 
 app.use(express.static(__dirname + '/public'));
 
