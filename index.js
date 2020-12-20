@@ -10,13 +10,15 @@ app.use(express.static('public'));
 app.set('view engine', 'html');
 app.engine('html', ejs.renderFile);
 
+const botapiRoute = require('./routes/botapi');
+app.use('/botapi', botapiRoute);
+
 app.get('/', function (req, res) {
   res.render('index');
 });
 
-app.get('/:boardId', function (req, res) {
-  res.render('index');
-});
+const roomRoute = require('./routes/room');
+app.use('/room', roomRoute);
 
 function onConnection(socket) {
   socket.on('join room', function (roomName) {
