@@ -16,7 +16,6 @@ const cookieSession = require('cookie-session');
 
 // networking
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => console.log('listening on port ' + port));
 const io = require('socket.io')(server, { wsEngine: 'ws' });
@@ -51,9 +50,9 @@ app.use('/auth', authRoutes);
 // app.use('/profile', profileRoutes);
 
 // create home route
-app.get('/', (req, res) => {
-  res.render('home');
-});
+// app.get('/', (req, res) => {
+//   res.render('home');
+// });
 
 // Random id appends to '/' route and redirects to '/:board' route
 app.get('/', (req, res) => {

@@ -17,7 +17,7 @@ router.get('/slack', passport.authenticate('Slack'));
 
 // callback auth with slack
 router.get('/slack/redirect', passport.authenticate('Slack'), (req, res) => {
-  res.send(req.user)    // print response
+  res.redirect('/');    // print response
 });
 
 module.exports = router;
