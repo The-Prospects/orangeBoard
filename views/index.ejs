@@ -1,11 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include('partials/head') %>
+    <meta charset="utf-8" />
+    <title>Orange Board</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A Collabrative White board" />
+    <meta name="author" content="The Prospects" />
+    <script>
+      const BOARD_ID = '<%= boardId %>';
+    </script>
+    <style type="text/css">
+      #container {
+        position: relative;
+      }
+      #container {
+        width: 1110px;
+        height: 555 px;
+        background-color: #fff;
+        border-radius: 5px;
+      }
+      body {
+        background: rgb(255, 108, 51) !important;
+      }
+      .logo {
+        height: 35px;
+        position: absolute;
+        top: 8px;
+        left: 5px;
+      }
+      .logo2 {
+        height: 50px;
+        position: absolute;
+        top: 0px;
+        right: 2px;
+      }
+      #imageTemp {
+        position: absolute;
+        top: 1px;
+        left: 1px;
+      }
+      canvas {
+        border-radius: 5px;
+        cursor: url(../img/pen.png), crosshair;
+      }
+      #text_tool {
+        position: absolute;
+        border: 1px dashed black;
+        outline: 0;
+        z-index: 1000 !important;
+        display: none;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .container .btn.btn-sm {
+        background: rgb(0, 0, 0);
+        box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);
+        color: #fff;
+        outline: none;
+        cursor: pointer;
+        text-shadow: 0 1px #06f;
+        display: inline-block;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 15px;
+        margin-right: 5px;
+      }
+      .container .btn.btn-sm:active {
+        background: #06f;
+      }
+      label {
+        color: #fff;
+      }
+    </style>
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   </head>
+
   <body>
-    <!-- Page Navigation Header-->
-    <%- include('partials/navbar') %>
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img class="logo" src="/img/whiteboard.jpg" />
+          </a>
+          <p class="navbar-text" style="margin-left: 40px; font-size: 16px">
+            Orange Board
+          </p>
+        </div>
+        <form class="navbar-form navbar-left" method="post" action="/create">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Create New Board"
+              name="board"
+            />
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+          <a class="navbar-brand" href="#">
+            <img class="logo2" src="/img/beaverlogo.png" />
+          </a>
+        </form>
+      </div>
+    </nav>
     <div class="container">
       <p>
         <button

@@ -3,19 +3,6 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const ejs = require('ejs');
-// page routing
-const authRoutes = require('./routes/auth-routes');
-//const profileRoutes = require('./routes/profile-routes');
-// auth
-const passportSetup = require('./config/passport-setup');
-const passport = require('passport');
-// database
-const mongoose = require('mongoose');
-const keys = require('./config/keys');
-const cookieSession = require('cookie-session');
-
-// networking
-const http = require('http').Server(app);
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => console.log('listening on port ' + port));
 const io = require('socket.io')(server, { wsEngine: 'ws' });
@@ -26,25 +13,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-app.use(cookieSession({
-  maxAge: 24 * 60 * 60 * 1000,    // 1 day in ms
-  keys: keys.session.cookieKey,
-}))
-
-// initalize passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-// connect to mongoose database
-mongoose.connect(keys.mongodb.dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
-  console.log('database connected');
-  if(err){
-    console.log(err);
-  }
-});
-
 // use auth routes
-app.use('/auth', authRoutes);
+// app.use('/auth', authRoutes);
 
 // use profile routes
 // app.use('/profile', profileRoutes);
